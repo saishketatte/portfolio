@@ -3,548 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TechDebugger – The Computer Learning Place</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg-color: #0f0f0f;
-      --text-color: #e0e0e0;
-      --primary-color: #00ffcc;
-      --card-bg: #1a1a1a;
-    }
-    body.light-mode {
-      --bg-color: #ffffff;
-      --text-color: #111111;
-      --primary-color: #007bff;
-      --card-bg: #f1f1f1;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: all 0.3s ease;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background-color: var(--card-bg);
-      flex-shrink: 0;
-    }
-    .logo {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: var(--primary-color);
-      user-select: none;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    nav a {
-      color: var(--text-color);
-      text-decoration: none;
-      transition: color 0.3s;
-      font-weight: 600;
-    }
-    nav a:hover {
-      color: var(--primary-color);
-    }
-    .mode-toggle {
-      background: none;
-      border: none;
-      color: var(--text-color);
-      font-size: 1.4rem;
-      cursor: pointer;
-      user-select: none;
-    }
-    .hero {
-      background: url('https://www.transparenttextures.com/patterns/circuit-board.png'), linear-gradient(135deg, #0f0f0f, #000000);
-      background-size: cover;
-      text-align: center;
-      padding: 5rem 2rem 3rem;
-      color: var(--text-color);
-      flex-shrink: 0;
-    }
-    .hero h1 {
-      font-size: 2.8rem;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
-      user-select: none;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      margin-bottom: 2rem;
-      user-select: none;
-    }
-    .cta-button {
-      padding: 0.8rem 1.5rem;
-      background-color: var(--primary-color);
-      color: #000;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background 0.3s;
-      user-select: none;
-      display: inline-block;
-    }
-    .cta-button:hover {
-      background-color: #00ccaa;
-    }
-    main {
-      flex-grow: 1;
-      padding: 2rem 1rem 4rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    #courses-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
-      gap: 1.6rem;
-    }
-    .course-card {
-      background-color: var(--card-bg);
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 0 10px #0008 inset;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      user-select: none;
-      transition: transform 0.25s ease;
-    }
-    .course-card:hover {
-      transform: translateY(-6px);
-    }
-    .course-title {
-      color: var(--primary-color);
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.7rem;
-    }
-    .course-desc {
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
-      flex-grow: 1;
-      color: var(--text-color);
-    }
-    .btn-book {
-      padding: 0.6rem 1rem;
-      background-color: var(--primary-color);
-      color: #000;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: background-color 0.3s;
-    }
-    .btn-book:hover {
-      background-color: #00ccaa;
-    }
-    #bookings-section {
-      margin-top: 3rem;
-      background-color: var(--card-bg);
-      padding: 1rem 1.5rem;
-      border-radius: 10px;
-      color: var(--primary-color);
-      user-select: text;
-    }
-    #bookings-section h2 {
-      margin-bottom: 1rem;
-      user-select: none;
-    }
-    #bookings-list {
-      max-height: 200px;
-      overflow-y: auto;
-      font-size: 0.95rem;
-    }
-    #bookings-list div {
-      margin-bottom: 0.5rem;
-      border-bottom: 1px solid #333;
-      padding-bottom: 0.3rem;
-    }
-    #export-btn {
-      margin-top: 1rem;
-      padding: 0.6rem 1.2rem;
-      font-weight: 700;
-      background-color: var(--primary-color);
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      color: #000;
-      transition: background-color 0.3s;
-    }
-    #export-btn:hover {
-      background-color: #00ccaa;
-    }
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right:0; bottom:0;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      padding: 1rem;
-    }
-    .modal.active {
-      display: flex;
-    }
-    .modal-content {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 400px;
-      position: relative;
-      color: var(--text-color);
-      box-shadow: 0 0 25px var(--primary-color);
-      user-select: none;
-    }
-    .modal-content h2 {
-      margin-bottom: 1rem;
-      color: var(--primary-color);
-      user-select: none;
-    }
-    .modal-content label {
-      display: block;
-      margin: 0.6rem 0 0.3rem;
-      font-weight: 600;
-      user-select: none;
-    }
-    .modal-content input {
-      width: 100%;
-      padding: 0.7rem;
-      border-radius: 5px;
-      border: 1px solid #444;
-      font-size: 1rem;
-      color: var(--text-color);
-      background-color: transparent;
-      user-select: text;
-    }
-    .modal-content input::placeholder {
-      color: #666;
-    }
-    .modal-content button {
-      margin-top: 1.2rem;
-      width: 100%;
-      padding: 0.8rem;
-      background-color: var(--primary-color);
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      color: #000;
-      user-select: none;
-      transition: background-color 0.3s;
-    }
-    .modal-content button:hover {
-      background-color: #00ccaa;
-    }
-    .close-btn {
-      position: absolute;
-      top: 12px;
-      right: 14px;
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--primary-color);
-      cursor: pointer;
-      user-select: none;
-    }
-    .error-msg {
-      color: #ff4c4c;
-      margin-top: 0.6rem;
-      font-size: 0.9rem;
-      user-select: none;
-    }
-    @media (max-width: 600px) {
-      header {
-        flex-wrap: wrap;
-        gap: 0.8rem;
-      }
-      nav ul {
-        justify-content: center;
-        gap: 1rem;
-        width: 100%;
-      }
-      main {
-        padding: 1rem;
-      }
-    }
-  </style>
+  <title>Abhimanyu Chapagain - Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="jawascript.js"></script>
 </head>
 <body>
-  <header>
-    <div class="logo">TechDebugger</div>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Community</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-    <button class="mode-toggle" id="toggleMode" title="Toggle Light/Dark Mode" aria-label="Toggle light or dark mode">🌙</button>
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#about" class="logo">Abhimanyu Chapagain</a>
+      <nav>
+        <ul>
+          <li><a href="#about" class="nav-link active">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">My Projects</a></li>
+          <li><a href="#tabletennis" class="nav-link">Table Tennis</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <button id="mode-toggle" title="Toggle Dark/Light Mode">🌙</button>
+      <div class="hamburger" tabindex="0" role="button" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
   </header>
 
-  <section class="hero">
-    <h1>Master Technology, Debug the Future</h1>
-    <p>Learn programming, hardware, cybersecurity and more – all in one place.</p>
-    <a href="#courses-container" class="cta-button">Browse Courses</a>
-  </section>
+  <main class="container">
+    <section id="about" class="section">
+      <div class="about-container">
+        <img src="ll.JPG" alt="Abhimanyu Chapagain" class="profile-photo" loading="lazy" />
+        <div class="about-text">
+          <h1>Hello, I'm Abhimanyu Chapagain</h1>
+          <p id="typewriter" class="typewriter"></p>
+          <p>I am a passionate coder, district-level table tennis champion, and a fun person to be around. I combine sports discipline with the logic of programming.</p>
+        </div>
+      </div>
+    </section>
 
-  <main>
-    <section id="courses-container" aria-label="Courses List"></section>
+    <section id="skills" class="section hidden">
+      <h2>My Coding Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/919/919828.png" alt="JavaScript" />
+          <h3>JavaScript</h3>
+          <p>Modern ES6+, DOM, and interactive websites.</p>
+        </div>
+        <div class="skill-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/919/919826.png" alt="HTML5" />
+          <h3>HTML5</h3>
+          <p>Semantic, accessible, clean structure.</p>
+        </div>
+        <div class="skill-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="CSS3" />
+          <h3>CSS3</h3>
+          <p>Flexbox, Grid, Animations, and Responsive UI.</p>
+        </div>
+      </div>
+    </section>
 
-    <section id="bookings-section" aria-live="polite" aria-atomic="true" aria-relevant="additions">
-      <h2>Your Booked Courses</h2>
-      <div id="bookings-list">No bookings yet.</div>
-      <button id="export-btn" title="Export your bookings to CSV">Export Bookings</button>
+    <section id="projects" class="section hidden">
+      <h2>My Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <img src="https://source.unsplash.com/400x250/?code,project" alt="Portfolio Project" />
+          <h3>Portfolio Website</h3>
+          <p>A personal dark-themed website made with HTML, CSS & JS.</p>
+          <a href="#">View Project</a>
+        </div>
+        <div class="project-card">
+          <img src="https://source.unsplash.com/400x250/?todo,app" alt="Todo App" />
+          <h3>To-Do List App</h3>
+          <p>A clean, minimal to-do list app with local storage and theme switcher.</p>
+          <a href="#">View Project</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="tabletennis" class="section hidden">
+      <h2>Table Tennis Achievements</h2>
+      <img src="o9.JPG" alt="Playing Table Tennis" class="section-image" />
+      <p>I am a district-level table tennis winner. The sport shaped my focus, reflex, and competitiveness—all of which influence how I code and solve problems.</p>
+    </section>
+
+    <section id="contact" class="section hidden">
+      <h2>Contact Me</h2>
+      <ul>
+        <li>Email: <a href="mailto:abhimanyu@example.com">abhimanyu@example.com</a></li>
+        <li>Facebook: <a href="https://www.facebook.com/abhimanyu.chapagain.5" target="_blank">Abhimanyu Chapagain</a></li>
+      </ul>
     </section>
   </main>
 
-  <!-- Booking Modal -->
-  <div class="modal" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
-    <div class="modal-content">
-      <button class="close-btn" id="closeModalBtn" aria-label="Close booking form">&times;</button>
-      <h2 id="modalTitle">Book Course</h2>
-      <form id="bookingForm" novalidate>
-        <label for="courseNameInput">Course:</label>
-        <input type="text" id="courseNameInput" name="course" readonly />
-
-        <label for="nameInput">Your Name:</label>
-        <input type="text" id="nameInput" name="name" placeholder="John Doe" required autocomplete="name" />
-
-        <label for="emailInput">Your Email:</label>
-        <input type="email" id="emailInput" name="email" placeholder="email@example.com" required autocomplete="email" />
-
-        <p class="error-msg" id="formError" role="alert" aria-live="assertive"></p>
-
-        <button type="submit">Confirm Booking</button>
-      </form>
-    </div>
-  </div>
-
-<script>
-  const coursesContainer = document.getElementById('courses-container');
-  const bookingModal = document.getElementById('bookingModal');
-  const bookingForm = document.getElementById('bookingForm');
-  const closeModalBtn = document.getElementById('closeModalBtn');
-  const courseNameInput = document.getElementById('courseNameInput');
-  const nameInput = document.getElementById('nameInput');
-  const emailInput = document.getElementById('emailInput');
-  const formError = document.getElementById('formError');
-  const bookingsList = document.getElementById('bookings-list');
-  const exportBtn = document.getElementById('export-btn');
-  const toggleModeBtn = document.getElementById('toggleMode');
-
-  // Dark/Light Mode Toggle with persistence
-  const currentTheme = localStorage.getItem('theme') || 'dark';
-  if (currentTheme === 'light') {
-    document.body.classList.add('light-mode');
-    toggleModeBtn.textContent = '☀️';
-  } else {
-    toggleModeBtn.textContent = '🌙';
-  }
-
-  toggleModeBtn.addEventListener('click', () => {
-    const isLight = document.body.classList.toggle('light-mode');
-    toggleModeBtn.textContent = isLight ? '☀️' : '🌙';
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-  });
-
-  // Generate 30 courses dynamically
-  const courses = [];
-  for(let i=1; i<=30; i++) {
-    courses.push({
-      id: i,
-      title: `Course #${i}: ${generateCourseTitle(i)}`,
-      description: generateCourseDescription(i)
-    });
-  }
-
-  function generateCourseTitle(i) {
-    const topics = [
-      'Introduction to Programming', 'Advanced JavaScript', 'Python for Data Science', 'Hardware Fundamentals',
-      'Linux Basics', 'Cybersecurity Essentials', 'Networking Concepts', 'Troubleshooting Techniques',
-      'Web Development', 'Mobile App Development', 'Cloud Computing', 'Database Management',
-      'AI & Machine Learning', 'Ethical Hacking', 'Computer Architecture', 'Software Testing',
-      'Operating Systems', 'Shell Scripting', 'Game Development', 'Version Control with Git',
-      'UI/UX Design', 'API Development', 'Data Structures & Algorithms', 'Virtualization',
-      'Embedded Systems', 'Cryptography', 'DevOps Fundamentals', 'Big Data Analysis',
-      'Blockchain Basics', 'Computer Vision'
-    ];
-    return topics[(i - 1) % topics.length];
-  }
-
-  function generateCourseDescription(i) {
-    const descriptions = [
-      'A perfect start to learn programming concepts.',
-      'Master JavaScript with practical examples.',
-      'Use Python to analyze and visualize data.',
-      'Learn how computer hardware works inside out.',
-      'Get comfortable with Linux commands and tools.',
-      'Understand the principles of cybersecurity.',
-      'Basics of computer networking explained simply.',
-      'Hands-on troubleshooting of common computer issues.',
-      'Build websites from scratch using HTML, CSS & JS.',
-      'Create mobile apps for Android and iOS.',
-      'Introduction to cloud services and deployment.',
-      'Learn to manage and query databases efficiently.',
-      'Explore artificial intelligence and machine learning.',
-      'Get into ethical hacking and penetration testing.',
-      'Understand how computers are architected internally.',
-      'Ensure software quality with testing techniques.',
-      'Learn the workings of modern operating systems.',
-      'Automate tasks with shell scripting.',
-      'Create games using popular game engines.',
-      'Use Git for version control in projects.',
-      'Design intuitive user interfaces and experiences.',
-      'Build APIs for web and mobile apps.',
-      'Learn important data structures and algorithms.',
-      'Explore virtualization and containerization tech.',
-      'Develop software for embedded hardware systems.',
-      'Understand encryption and secure communication.',
-      'Introduction to DevOps tools and processes.',
-      'Analyze big data with modern tools.',
-      'Basics of blockchain technology and applications.',
-      'Apply computer vision techniques to real problems.'
-    ];
-    return descriptions[(i - 1) % descriptions.length];
-  }
-
-  // Render courses to page
-  function renderCourses() {
-    coursesContainer.innerHTML = '';
-    courses.forEach(course => {
-      const card = document.createElement('div');
-      card.className = 'course-card';
-      card.innerHTML = `
-        <h3 class="course-title">${course.title}</h3>
-        <p class="course-desc">${course.description}</p>
-        <button class="btn-book" aria-label="Book ${course.title}" data-course="${course.title}">Book Now</button>
-      `;
-      coursesContainer.appendChild(card);
-    });
-  }
-
-  renderCourses();
-
-  // Show booking modal with course name filled
-  coursesContainer.addEventListener('click', e => {
-    if(e.target.classList.contains('btn-book')) {
-      const courseTitle = e.target.getAttribute('data-course');
-      courseNameInput.value = courseTitle;
-      nameInput.value = '';
-      emailInput.value = '';
-      formError.textContent = '';
-      bookingModal.classList.add('active');
-      nameInput.focus();
-    }
-  });
-
-  // Close modal
-  closeModalBtn.addEventListener('click', () => {
-    bookingModal.classList.remove('active');
-  });
-  bookingModal.addEventListener('click', e => {
-    if(e.target === bookingModal) {
-      bookingModal.classList.remove('active');
-    }
-  });
-
-  // Booking form submit
-  bookingForm.addEventListener('submit', e => {
-    e.preventDefault();
-    formError.textContent = '';
-
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const course = courseNameInput.value;
-
-    if(name.length < 2) {
-      formError.textContent = 'Please enter a valid name.';
-      nameInput.focus();
-      return;
-    }
-    if(!validateEmail(email)) {
-      formError.textContent = 'Please enter a valid email.';
-      emailInput.focus();
-      return;
-    }
-
-    // Save booking to localStorage
-    const bookings = JSON.parse(localStorage.getItem('techDebuggerBookings') || '[]');
-    bookings.push({course, name, email, date: new Date().toISOString()});
-    localStorage.setItem('techDebuggerBookings', JSON.stringify(bookings));
-    
-    updateBookingsUI();
-    bookingModal.classList.remove('active');
-    alert(`Thank you, ${name}! Your booking for "${course}" has been recorded.`);
-  });
-
-  // Email validation helper
-  function validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
-
-  // Update booking list UI
-  function updateBookingsUI() {
-    const bookings = JSON.parse(localStorage.getItem('techDebuggerBookings') || '[]');
-    if(bookings.length === 0) {
-      bookingsList.textContent = 'No bookings yet.';
-      return;
-    }
-    bookingsList.innerHTML = '';
-    bookings.slice(-10).reverse().forEach(({course, name, email, date}, idx) => {
-      const d = new Date(date);
-      const div = document.createElement('div');
-      div.textContent = `${name} (${email}) booked "${course}" on ${d.toLocaleDateString()} at ${d.toLocaleTimeString()}`;
-      bookingsList.appendChild(div);
-    });
-  }
-  updateBookingsUI();
-
-  // Export bookings as CSV
-  exportBtn.addEventListener('click', () => {
-    const bookings = JSON.parse(localStorage.getItem('techDebuggerBookings') || '[]');
-    if(bookings.length === 0) {
-      alert('No bookings to export!');
-      return;
-    }
-    const csvHeader = 'Course,Name,Email,Date\n';
-    const csvRows = bookings.map(b => 
-      `"${b.course.replace(/"/g,'""')}","${b.name.replace(/"/g,'""')}","${b.email.replace(/"/g,'""')}","${b.date}"`
-    );
-    const csvContent = csvHeader + csvRows.join('\n');
-
-    const blob = new Blob([csvContent], {type: 'text/csv'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'TechDebugger_Bookings.csv';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  });
-
-</script>
+  <footer class="footer">
+    <p>© 2025 Abhimanyu Chapagain. All rights reserved.</p>
+  </footer>
 </body>
 </html>

@@ -1,112 +1,282 @@
+:root {
+  --color-bg: #0a1230;
+  --color-text: #e0e6f8;
+  --color-accent: #4deeea;
+  --color-accent-hover: #3bb9b3;
+  --color-nav-bg: rgba(10, 18, 46, 0.95);
+  --color-footer-bg: #08122a;
+}
+
+[data-theme="light"] {
+  --color-bg: #f0f4f8;
+  --color-text: #222831;
+  --color-accent: #0077cc;
+  --color-accent-hover: #005fa3;
+  --color-nav-bg: rgba(240, 244, 248, 0.95);
+  --color-footer-bg: #dde3ea;
+}
+
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: #0f0f0f;
-  color: #e0e0e0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-header {
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 1rem;
+}
+
+/* Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: var(--color-nav-bg);
+  padding: 15px 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 2rem;
-  background-color: #121212;
-  border-bottom: 1px solid #1f1f1f;
+  z-index: 100;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .logo {
-  font-size: 1.5rem;
-  color: #00ffcc;
-  font-weight: 700;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--color-accent);
+  text-decoration: none;
 }
 
 nav ul {
-  display: flex;
-  gap: 1.5rem;
   list-style: none;
+  display: flex;
+  gap: 20px;
+  margin-left: auto;
 }
 
-nav a {
-  color: #ccc;
+nav ul li a {
+  color: var(--color-text);
   text-decoration: none;
-  transition: color 0.3s ease;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 5px;
 }
 
-nav a:hover {
-  color: #00ffcc;
+nav ul li a:hover,
+nav ul li a.active {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
 }
 
-.mode-toggle {
+/* Dark/Light mode toggle */
+#mode-toggle {
   background: none;
   border: none;
-  font-size: 1.2rem;
-  color: #ccc;
+  color: var(--color-accent);
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 18px;
+  margin-left: 20px;
   cursor: pointer;
 }
 
-.hero {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+.hamburger span {
+  height: 3px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
+  width: 100%;
 }
 
-.hero h1 {
-  font-size: 2.5rem;
-  color: #00ffcc;
-  margin-bottom: 1rem;
+/* Show menu on mobile */
+nav ul.show {
+  position: absolute;
+  top: 60px;
+  right: 1rem;
+  background: var(--color-nav-bg);
+  flex-direction: column;
+  gap: 15px;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  display: flex !important;
 }
 
-.hero p {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
+/* Section base */
+.section {
+  padding: 40px 0;
 }
 
-.cta-button {
-  padding: 0.8rem 1.5rem;
-  background-color: #00ffcc;
-  color: #000;
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background 0.3s;
+.hidden {
+  display: none;
 }
 
-.cta-button:hover {
-  background-color: #00ccaa;
-}
-
-.features {
+/* About section */
+.about-container {
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 3rem 2rem;
-  background-color: #121212;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
-.feature-card {
-  background-color: #1a1a1a;
-  padding: 1.5rem;
+.profile-photo {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-accent);
+}
+
+.about-text {
+  flex: 1;
+}
+
+.typewriter {
+  color: var(--color-accent);
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-height: 30px;
+  margin-bottom: 10px;
+}
+
+/* Skills section */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.skill-card {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-accent);
   border-radius: 10px;
-  width: 250px;
-  text-align: center;
-  border: 1px solid #2a2a2a;
+  transition: background-color 0.3s ease;
 }
 
-.feature-card h3 {
-  color: #00ffcc;
-  margin-bottom: 0.5rem;
+.skill-card:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
 }
 
-footer {
+.skill-card img {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+/* Projects section */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-accent);
+  border-radius: 10px;
+  padding: 15px;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.project-card img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.project-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.project-card:hover a {
+  color: var(--color-bg);
+}
+
+/* Table Tennis section */
+.section-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+/* Contact section */
+#contact ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#contact ul li {
+  margin-bottom: 8px;
+}
+
+#contact ul li a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#contact ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+.footer {
   text-align: center;
-  padding: 1rem;
-  background-color: #0d0d0d;
-  color: #666;
+  padding: 20px 0;
+  background-color: var(--color-footer-bg);
+  color: var(--color-text);
   font-size: 0.9rem;
+  margin-top: 40px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
 }
